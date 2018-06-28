@@ -30,7 +30,8 @@ class Block extends Component {
         style          = {{ flex: 1 }}
         delayLongPress = { this.props.delayLongPress }
         onLongPress    = { () => (this.props.inactive || this.props.fixed) || this.props.onLongPress() }
-        onPress        = { () => this.props.inactive || this.props.onPress() }>
+        onPress        = { () => this.props.inactive || this.props.onPress() }
+        onPressIn        = { () => this.props.inactive || this.props.onPressIn() }>
 
           <View style={styles.itemImageContainer}>
             <View style={ this.props.itemWrapperStyle }>
@@ -61,6 +62,7 @@ class SortableGrid extends Component {
               delayLongPress = { this.dragActivationTreshold }
               onLongPress = { this.activateDrag(key) }
               onPress = { this.handleTap(item.props) }
+              onPressIn = { this.handleTouch(item.props) }
               itemWrapperStyle = { this._getItemWrapperStyle(key) }
               deletionView = { this._getDeletionView(key) }
               inactive = { item.props.inactive }
@@ -371,6 +373,10 @@ class SortableGrid extends Component {
     else if (onDoubleTap != null) {
       this.doubleTapWait ? this._onDoubleTap(onDoubleTap) : this._onSingleTap(onTap)
     } else onTap()
+  }
+
+  handleTouch = ({ onTouch = NULL_FN }) => () => {
+    onTouch()
   }
 
   // Helpers & other boring stuff
